@@ -1,5 +1,12 @@
+package com.minhaoyu.tank;
+
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Objects;
 
 public class Tank {
 
@@ -7,6 +14,7 @@ public class Tank {
     private Dir dir;
     private boolean bL, bU, bR, bD;
     public static final int SPEED = 5;
+    private boolean moving = false;
 
 
 
@@ -16,9 +24,9 @@ public class Tank {
         this.dir = dir;
     }
 
-    public void paint(Graphics g) {
-        g.fillRect(x,y,60,60);
-        move();
+    public void paint(Graphics g)  {
+            g.drawImage(ResourceMgr.goodTankU,x,y,null);
+            move();
     }
 
     public void keyPressed(KeyEvent e) {
@@ -31,19 +39,19 @@ public class Tank {
                 break;
 
             case KeyEvent.VK_UP:
-                dir =Dir.U;
+                dir = Dir.U;
                 y -= SPEED;
                 bU = true;
                 break;
 
             case KeyEvent.VK_DOWN:
-                dir =Dir.D;
+                dir = Dir.D;
                 y += SPEED;
                 bD = true;
                 break;
 
             case KeyEvent.VK_RIGHT:
-                dir =Dir.R;
+                dir = Dir.R;
                 x += SPEED;
                 bR = true;
                 break;
@@ -56,7 +64,10 @@ public class Tank {
 
     private void setMainDir() {
         if (!bL && !bU && !bR && !bD){
-            dir = Dir.STOP;
+            moving = false;
+        }
+        else {
+            moving = true;
         }
         if (bL && !bU && !bR && !bD){
             dir = Dir.L;
@@ -74,23 +85,26 @@ public class Tank {
     }
 
     private void move() {
-        switch(dir){
-            case L:
-                x -=SPEED;
-                break;
-            case U:
-                y -=SPEED;
-                break;
-            case R:
-                x +=SPEED;
-                break;
-            case D:
-                y +=SPEED;
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + dir);
+        if (!moving) {
+            return;
         }
-    }
+            switch (dir) {
+                case L:
+                    x -= SPEED;
+                    break;
+                case U:
+                    y -= SPEED;
+                    break;
+                case R:
+                    x += SPEED;
+                    break;
+                case D:
+                    y += SPEED;
+                    break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + dir);
+            }
+        }
 
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();

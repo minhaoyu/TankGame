@@ -1,7 +1,8 @@
+package com.minhaoyu.tank;
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 public class TankFrame extends Frame {
 
@@ -15,7 +16,7 @@ public class TankFrame extends Frame {
 
         this.addKeyListener(new TankKeyListener());// observer设计模式预习一下
 
-        myTank = new Tank(100, 100,Dir.R);
+        myTank = new Tank(100, 100, Dir.R);
         enemy = new Tank(150, 150, Dir.D);
 
 

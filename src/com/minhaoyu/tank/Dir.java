@@ -1,3 +1,5 @@
+package com.minhaoyu.tank;
+
 /**
  * @author jason
  */
